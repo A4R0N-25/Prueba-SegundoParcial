@@ -6,6 +6,7 @@
 package ec.edu.espe.distribuidas.model;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
@@ -39,5 +40,9 @@ public class RespuestaAutogestion implements Serializable {
     @JoinColumn(name = "cod_pregunta", referencedColumnName = "cod_pregunta", nullable = false, insertable = false, updatable = false)
     @ManyToOne(fetch = FetchType.EAGER, optional = false)
     private PreguntaAutogestion preguntaAutogestion;
+    
+    public RespuestaAutogestion(BigDecimal pregunta, String usuario){
+        this.pk = new RespuestaAutogestionPK(pregunta,usuario);
+    }
 
 }

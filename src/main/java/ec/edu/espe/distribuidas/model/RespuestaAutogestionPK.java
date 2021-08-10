@@ -10,6 +10,7 @@ import java.math.BigDecimal;
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 /**
  *
@@ -17,6 +18,7 @@ import lombok.Data;
  */
 @Embeddable
 @Data
+@NoArgsConstructor
 public class RespuestaAutogestionPK implements Serializable {
     
     @Column(name = "cod_pregunta", nullable = false, precision = 8)
@@ -24,5 +26,11 @@ public class RespuestaAutogestionPK implements Serializable {
     
     @Column(name = "cod_usuario", nullable = false, length = 30)
     private String codigoUsuario;
+
+    public RespuestaAutogestionPK(BigDecimal codigoPregunta, String codigoUsuario) {
+        this.codigoPregunta = codigoPregunta;
+        this.codigoUsuario = codigoUsuario;
+    }
+
     
 }

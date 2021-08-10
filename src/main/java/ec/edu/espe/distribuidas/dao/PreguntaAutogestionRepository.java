@@ -6,6 +6,7 @@
 package ec.edu.espe.distribuidas.dao;
 
 import ec.edu.espe.distribuidas.model.PreguntaAutogestion;
+import java.math.BigDecimal;
 import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 
@@ -13,7 +14,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
  *
  * @author bran-
  */
-public interface PreguntaAutogestionRepository extends JpaRepository<PreguntaAutogestion,Integer>{
+public interface PreguntaAutogestionRepository extends JpaRepository<PreguntaAutogestion,BigDecimal>{
     
     List<PreguntaAutogestion> findByEstado(String estado);
     

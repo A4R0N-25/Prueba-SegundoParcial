@@ -8,21 +8,15 @@
  * Contributors:
  *    bran- - initial API and implementation and/or initial documentation
  */
-package ec.edu.espe.distribuidas.dto;
+package ec.edu.espe.distribuidas.dao;
 
-import java.math.BigDecimal;
-import lombok.Builder;
-import lombok.Data;
+import ec.edu.espe.distribuidas.model.Usuario;
+import org.springframework.data.jpa.repository.JpaRepository;
 
 /**
  *
  * @author bran-
  */
-@Data
-@Builder
-public class PreguntasRS {
-    
-    private BigDecimal codigo;
-    private String enunciado;
-    
+public interface UsuarioRepository extends JpaRepository<Usuario, String> {
+
 }

@@ -11,7 +11,6 @@
 package ec.edu.espe.distribuidas.dto;
 
 import java.math.BigDecimal;
-import lombok.Builder;
 import lombok.Data;
 
 /**
@@ -19,10 +18,8 @@ import lombok.Data;
  * @author bran-
  */
 @Data
-@Builder
-public class PreguntasRS {
+public class PreguntaRespuestaRQ {
     
-    private BigDecimal codigo;
-    private String enunciado;
-    
+    private BigDecimal pregunta;
+    private String respuesta;
 }
