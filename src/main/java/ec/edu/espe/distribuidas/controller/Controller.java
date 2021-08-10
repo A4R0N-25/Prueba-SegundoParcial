@@ -57,13 +57,13 @@ public class Controller {
     @PostMapping
     public ResponseEntity ingresarRespuestasPreguntas(@RequestBody RespuestasRQ respuestasRQ) {
         try {
-            this.servicio.insertarRespuestasPreguntas(respuestasRQ);
-            return ResponseEntity.ok().build();
+            List<String> errores = this.servicio.insertarRespuestasPreguntas(respuestasRQ);
+            return ResponseEntity.ok(errores);
         } catch (EntityNotFoundException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
-        } /*catch (Exception e) {
+        } catch (Exception e) {
             return ResponseEntity.internalServerError().build();
-        }*/
+        }
     }
 
 }

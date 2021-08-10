@@ -19,6 +19,7 @@ import ec.edu.espe.distribuidas.exception.EntityNotFoundException;
 import ec.edu.espe.distribuidas.model.PreguntaAutogestion;
 import ec.edu.espe.distribuidas.model.RespuestaAutogestion;
 import ec.edu.espe.distribuidas.model.Usuario;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import lombok.extern.slf4j.Slf4j;
@@ -46,12 +47,14 @@ public class Servicio {
         return this.preguntaAutogestionRepository.findByEstado("ACT");
     }
 
-    public void insertarRespuestasPreguntas(RespuestasRQ respuestasRQ) {
+    public List<String> insertarRespuestasPreguntas(RespuestasRQ respuestasRQ) {
         Optional<Usuario> usuarioOpt = this.usuarioRepository.findById(respuestasRQ.getUsuario());
 
         if (usuarioOpt.isEmpty()) {
             throw new EntityNotFoundException("No se encontro el usuario");
         }
+
+        List<String> errores = new ArrayList<>();
 
         Usuario usuario = usuarioOpt.get();
 
@@ -59,10 +62,12 @@ public class Servicio {
             Optional<PreguntaAutogestion> preguntaOpt = this.preguntaAutogestionRepository.findById(preguntaRespuestaRQ.getPregunta());
             if (preguntaOpt.isEmpty()) {
                 log.error("No se encontro la pregunta: {}", preguntaRespuestaRQ.getPregunta());
+                errores.add("No se encontro la pregunta: " + preguntaRespuestaRQ.getPregunta());
                 continue;
             }
-            if (preguntaRespuestaRQ.getRespuesta().length() <= 5) {
+            if (preguntaRespuestaRQ.getRespuesta().length() <= 5 || preguntaRespuestaRQ.getRespuesta() == null) {
                 log.error("La respuesta a la pregunta {} no cuenta con la longitud suficiente", preguntaRespuestaRQ.getPregunta());
+                errores.add("La respuesta a la pregunta " + preguntaRespuestaRQ.getPregunta() + " no cuenta con la longitud suficiente");
                 continue;
             }
 
@@ -74,10 +79,14 @@ public class Servicio {
                 respuestaAutogestion.setUsuario(usuario);
 
                 this.respuestaAutogestionRepository.save(respuestaAutogestion);
+            } else {
+                log.error("La respuesta a la pregunta {} no se encuentra activa", preguntaRespuestaRQ.getPregunta());
+                errores.add("La respuesta a la pregunta " + preguntaRespuestaRQ.getPregunta() + " no se encuentra activa");
             }
 
         }
 
+        return errores;
     }
 
 }
