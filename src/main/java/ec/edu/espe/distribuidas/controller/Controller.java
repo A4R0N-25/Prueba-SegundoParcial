@@ -16,6 +16,9 @@ import ec.edu.espe.distribuidas.exception.EntityNotFoundException;
 import ec.edu.espe.distribuidas.model.PreguntaAutogestion;
 import ec.edu.espe.distribuidas.service.Servicio;
 import ec.edu.espe.distribuidas.transform.PreguntasTS;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 import java.util.ArrayList;
 import java.util.List;
 import org.springframework.http.HttpStatus;
@@ -41,6 +44,12 @@ public class Controller {
     }
 
     @GetMapping
+    @ApiOperation(value = "Obtener preguntas activas",
+            notes = "Obtiene todas las preguntas que se encuentren activas")
+    @ApiResponses(value = {
+        @ApiResponse(code = 200, message = "Ok - Se encontraron los registros"),
+        @ApiResponse(code = 404, message = "Not Found - No se encontro una entidad"),
+        @ApiResponse(code = 500, message = "Internal Server Error - Problemas al realizar la busqueda")})
     public ResponseEntity obtenerPreguntasActivas() {
         try {
             List<PreguntaAutogestion> preguntasAutogestion = this.servicio.obtenerPreguntasActivas();
@@ -55,6 +64,12 @@ public class Controller {
     }
 
     @PostMapping
+    @ApiOperation(value = "Ingresar respuestas",
+            notes = "Se ingresan todas las respuestas de un usuario a las preguntas")
+    @ApiResponses(value = {
+        @ApiResponse(code = 200, message = "Ok - Guardado exitosamente las respuestas"),
+        @ApiResponse(code = 404, message = "Not Found - No se encontro una entidad"),
+        @ApiResponse(code = 500, message = "Internal Server Error - Problemas al realizar la busqueda")})
     public ResponseEntity ingresarRespuestasPreguntas(@RequestBody RespuestasRQ respuestasRQ) {
         try {
             List<String> errores = this.servicio.insertarRespuestasPreguntas(respuestasRQ);
